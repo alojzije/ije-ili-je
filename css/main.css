@@ -21,7 +21,6 @@ body {
 #inputWord {
     width: 60%;
     display: inline-block;
-    height: 2.5em;
 }
 
 button {
@@ -30,7 +29,6 @@ button {
     letter-spacing: 1px;
     font-family: 'Ek Mukta', sans-serif !important;
     display: inline-block;
-    height: 2.5em;
 }
 @media all and (min-width: 1200px) {
     .contentContainer {
