@@ -19,7 +19,7 @@ $(document).ready(function() {
                 response.correctSpelling = inputWord;
                 response.explanation = data[inputWord];
             } else {
-                var pattern = inputWord.replace(/ije|je/i, '[i]{0,1}je')
+                var pattern = inputWord.replace(/ije|je/i, '[i]{0,1}[j]{0,1}e')
                     .replace(/c|ć|č/i, '[cčć]{1}')
                     .replace(/s/i, '[sš]{1}')
                     .replace(/z/i, '[zž]{1}');
