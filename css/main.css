@@ -10,7 +10,6 @@ body {
 }
 .resultContainer {
     font-family: 'OpenSans', sans-serif !important;
-    margin-top: 3em;
     text-align: left;
     width: 100%;
     padding: 0 12% ;
@@ -25,8 +24,9 @@ body {
 
 button {
     width: 15%;
-    min-width: 50px;
+    min-width: 4.5em;
     letter-spacing: 1px;
+    margin-top: -2px;
     font-family: 'Ek Mukta', sans-serif !important;
     display: inline-block;
 }
@@ -34,4 +34,7 @@ button {
     .contentContainer {
         width: 50%;
     }
+    button {
+
+    margin-top: 0px;
 }
