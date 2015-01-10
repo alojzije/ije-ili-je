@@ -12,15 +12,22 @@
 
 <body>
     <div class="contentContainer">
-        <form id="ijeForm">
+        <form id="ijeForm" class="form-inline">
             <h2>ije ili je ?</h2>
-            <input id="inputWord" type="text" autocomplete="off">
-            <button> ije ili je?</button>
+            <input id="inputWord" type="text" autocomplete="off" class="form-control">
+            <button class="btn btn-default" type="submit"> (i)je?</button>
         </form>
         <div>
-        <br>
-            <p><b>Rezultat:<b> </p><p id="result"></p>
-            <p id="optionalExplanation"></p>
+            <br>
+            <div class="resultContainer">
+                <h4><small><b> PIŠE SE: </b></small> </h4>
+                <p id="resultOutput"></p>
+                <div class="explanationContainer" >
+                    <br>
+                    <h4><small><b> POJAŠNJENJE: </b></small> </h4>
+                    <div id="explanationOutput"></div>
+                </div>
+            </div>
         </div>
     </div>
     <script type="text/javascript" src="js/checkIJE.js"></script>
