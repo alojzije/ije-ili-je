@@ -54,13 +54,11 @@ $(document).ready(function() {
         };
 
         var displayOutputForWord = function(word) {
-            resultContainer.fadeIn(200);
-            resultOutput.addClass('loading');
             var responseObj = IJEchecker.checkIJE(word.toLowerCase());
             //console.log(responseObj);
-            resultOutput.fadeOut(100).removeClass('loading');
-            resultOutput.fadeIn(100).text(responseObj.correctSpelling);
-       
+            resultOutput.text(responseObj.correctSpelling);
+            resultContainer.fadeIn(200);
+
 
             if (responseObj.explanation) {
                 explanationOutput.html(responseObj.explanation);
@@ -89,23 +87,17 @@ $(document).ready(function() {
 
 
     var inputField = $('#inputWord');
+    var loadingSpinner = $('.loading');
     resultModule.setIJEchecker(IJEchecker);
     //on first page load, check if there's a url search query
     var query = decodeURI(location.search).split('=')[1];
     inputField.val(query);
 
-    //$.getJSON('js/IJEdata.json', function(json) {
-    $.getJSON('js/IJE_CCH_data.json', function(json) {
-        IJEchecker.setData(json);
-        console.log('gotJson!');
-        if (query) {
-            window.history.pushState('', '', '?search=' + query);
-            resultModule.displayOutputForWord(query);
-        }
-    });
 
     $('#ijeForm').submit(function(e) {
         e.preventDefault();
+        loadingSpinner.fadeIn(100);
+
         var inputWord = inputField.val();
         if (inputWord) {
             window.history.pushState('', '', '?search=' + inputWord);
@@ -113,8 +105,18 @@ $(document).ready(function() {
         } else {
             resultModule.hideResultContainer();
         }
+        loadingSpinner.fadeOut(100);
+
     });
 
+    //$.getJSON('js/IJEdata.json', function(json) {
+    $.getJSON('js/IJE_CCH_data.json', function(json) {
+        IJEchecker.setData(json);
+        console.log('gotJson!');
+        if (query) {
+            $('#ijeForm').submit();
+        }
+    });
 
 
 

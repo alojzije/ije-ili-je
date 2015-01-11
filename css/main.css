@@ -17,15 +17,18 @@ body {
 .explanationContainer, .resultContainer {
     display: none;
 }
-#resultOutput {
-    min-height: 26px;
-}
+
 #inputWord {
     width: 60%;
     display: inline-block;
 }
+.loadingContainer{
+    margin-top: 0.4em;
+    min-height: 24px;
+}
 .loading {
-    background: #ffffff url(../spinner.gif) no-repeat left center;
+    background: #ffffff url(../spinner.gif) no-repeat center center;
+    min-height: 24px;
 }
 button {
     width: 15%;
