@@ -54,11 +54,12 @@ $(document).ready(function() {
         };
 
         var displayOutputForWord = function(word) {
+
+            resultContainer.fadeOut(100);
             var responseObj = IJEchecker.checkIJE(word.toLowerCase());
             //console.log(responseObj);
             resultOutput.text(responseObj.correctSpelling);
             resultContainer.fadeIn(200);
-
 
             if (responseObj.explanation) {
                 explanationOutput.html(responseObj.explanation);
