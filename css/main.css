@@ -21,6 +21,9 @@ body {
     width: 60%;
     display: inline-block;
 }
+.loading{
+    background: #ffffff url(../spinner.gif) no-repeat left center;
+}
 
 button {
     width: 15%;
