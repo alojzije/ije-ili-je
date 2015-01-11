@@ -1,6 +1,10 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:700|Ek+Mukta:500&subset=latin-ext,latin);
 body {
     text-align: center;
+    font-size: 12px !important;
+}
+.title {
+    padding: 0 12%;
 }
 .contentContainer {
     padding-top: 5%;
@@ -11,18 +15,17 @@ body {
 .resultContainer {
     font-family: 'OpenSans', sans-serif !important;
     text-align: left;
-    width: 100%;
+    width: 100;
     padding: 0 12%;
 }
 .explanationContainer, .resultContainer {
     display: none;
 }
-
 #inputWord {
     width: 60%;
     display: inline-block;
 }
-.loadingContainer{
+.loadingContainer {
     margin-top: 0.4em;
     min-height: 24px;
 }
@@ -31,8 +34,9 @@ body {
     min-height: 24px;
     display: none;
 }
-.xor{
+.xor {
     font-size: 0.9em;
+    font-family: sans-serif;
 }
 button {
     width: 15%;
@@ -41,6 +45,7 @@ button {
     margin-top: -2px;
     font-family: 'Ek Mukta', sans-serif !important;
     display: inline-block;
+}
 }
 @media all and (min-width: 1200px) {
     .contentContainer {
