@@ -12,19 +12,21 @@ body {
     font-family: 'OpenSans', sans-serif !important;
     text-align: left;
     width: 100%;
-    padding: 0 12% ;
+    padding: 0 12%;
 }
 .explanationContainer, .resultContainer {
     display: none;
+}
+#resultOutput {
+    min-height: 26px;
 }
 #inputWord {
     width: 60%;
     display: inline-block;
 }
-.loading{
+.loading {
     background: #ffffff url(../spinner.gif) no-repeat left center;
 }
-
 button {
     width: 15%;
     min-width: 4.5em;
@@ -38,6 +40,5 @@ button {
         width: 50%;
     }
     button {
-
-    margin-top: 0px;
-}
+        margin-top: 0px;
+    }

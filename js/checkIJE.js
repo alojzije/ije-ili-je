@@ -58,11 +58,9 @@ $(document).ready(function() {
             resultOutput.addClass('loading');
             var responseObj = IJEchecker.checkIJE(word.toLowerCase());
             //console.log(responseObj);
-            resultOutput.removeClass('loading');
-            resultContainer.fadeOut(200);
-            resultOutput.text(responseObj.correctSpelling);
-            resultContainer.fadeIn(200);
-            
+            resultOutput.fadeOut(100).removeClass('loading');
+            resultOutput.fadeIn(100).text(responseObj.correctSpelling);
+       
 
             if (responseObj.explanation) {
                 explanationOutput.html(responseObj.explanation);
