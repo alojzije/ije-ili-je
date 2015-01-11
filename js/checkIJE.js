@@ -104,6 +104,7 @@ $(document).ready(function() {
         e.preventDefault();
         var inputWord = inputField.val();
         if (inputWord) {
+            window.history.pushState('', '', '?search=' + inputWord);
             resultModule.displayOutputForWord(inputWord);
         } else {
             resultModule.hideResultContainer();
