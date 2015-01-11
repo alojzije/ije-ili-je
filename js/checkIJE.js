@@ -88,7 +88,7 @@ $(document).ready(function() {
     var inputField = $('#inputWord');
     resultModule.setIJEchecker(IJEchecker);
     //on first page load, check if there's a url search query
-    var query = location.search.split('=')[1];
+    var query = decodeURI(location.search).split('=')[1];
     inputField.val(query);
 
     $.getJSON('js/IJEdata.json', function(json) {
