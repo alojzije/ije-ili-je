@@ -4,10 +4,9 @@ $(document).ready(function() {
         // {'correct spelling of the word' :'optional HTML explanation'}
         var data = null;
 
-        $.getJSON("js/IJEdata.json", function(json) {
+        var setData = function(json) {
             data = json;
-            console.log('jaj')
-        });
+        };
 
         var checkIJE = function(inputWord) {
             var response = {
@@ -37,6 +36,7 @@ $(document).ready(function() {
 
         return {
             checkIJE: checkIJE,
+            setData: setData
         };
     })();
 
@@ -55,7 +55,7 @@ $(document).ready(function() {
 
         var displayOutputForWord = function(word) {
             var responseObj = IJEchecker.checkIJE(word.toLowerCase());
-            console.log(responseObj);
+            //console.log(responseObj);
             resultOutput.text(responseObj.correctSpelling);
             resultContainer.fadeIn(200);
 
@@ -83,8 +83,22 @@ $(document).ready(function() {
 
     })();
 
+
+
     var inputField = $('#inputWord');
     resultModule.setIJEchecker(IJEchecker);
+    //on first page load, check if there's a url search query
+    var query = location.search.split('=')[1];
+    inputField.val(query);
+
+    $.getJSON('js/IJEdata.json', function(json) {
+        IJEchecker.setData(json);
+        console.log('gotJson!');
+        if (query) {
+            window.history.pushState('', '', '?search=' + query);
+            resultModule.displayOutputForWord(query);
+        }
+    });
 
     $('#ijeForm').submit(function(e) {
         e.preventDefault();
@@ -95,5 +109,11 @@ $(document).ready(function() {
             resultModule.hideResultContainer();
         }
     });
+
+
+
+
+
+
 
 });
