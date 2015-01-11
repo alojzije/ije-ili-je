@@ -6,7 +6,7 @@ $(document).ready(function() {
 
         $.getJSON("js/IJEdata.json", function(json) {
             data = json;
-            //console.log(data)
+            console.log('jaj')
         });
 
         var checkIJE = function(inputWord) {
