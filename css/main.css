@@ -29,6 +29,10 @@ body {
 .loading {
     background: #ffffff url(../spinner.gif) no-repeat center center;
     min-height: 24px;
+    display: none;
+}
+.xor{
+    font-size: 0.9em;
 }
 button {
     width: 15%;

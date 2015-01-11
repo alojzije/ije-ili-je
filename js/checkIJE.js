@@ -19,9 +19,11 @@ $(document).ready(function() {
                 response.explanation = data[inputWord];
             } else {
                 var pattern = inputWord.replace(/ije|je/i, '[i]{0,1}[j]{0,1}e')
-                    .replace(/c|ć|č/i, '[cčć]{1}')
-                    .replace(/s/i, '[sš]{1}')
-                    .replace(/z/i, '[zž]{1}');
+                    .replace(/c|ć|č/gi, '[cčć]{1}')
+                    .replace(/s/gi, '[sš]{1}')
+                    .replace(/z/gi, '[zž]{1}')
+                    .replace(/d|đ|dž/gi, '[dđdž]{1,2}');
+
                 var regEx = new RegExp('^' + pattern + '$');
                 for (var word in data) {
                     if (word.match(regEx)) {
@@ -43,6 +45,7 @@ $(document).ready(function() {
 
     var resultModule = (function() {
         var resultContainer = $('.resultContainer');
+        resultContainer.isHidden = true;
         var resultOutput = $('#resultOutput');
         var explanationContainer = $('.explanationContainer');
         var explanationOutput = $('#explanationOutput');
@@ -54,20 +57,28 @@ $(document).ready(function() {
         };
 
         var displayOutputForWord = function(word) {
-
-            resultContainer.fadeOut(100);
             var responseObj = IJEchecker.checkIJE(word.toLowerCase());
             //console.log(responseObj);
-            resultOutput.text(responseObj.correctSpelling);
-            resultContainer.fadeIn(200);
 
-            if (responseObj.explanation) {
-                explanationOutput.html(responseObj.explanation);
-                explanationContainer.fadeIn(200);
-            } else {
-                explanationContainer.fadeOut(200);
-                explanationOutput.html('');
-            }
+            resultOutput.fadeOut(200, function() {
+                resultOutput.text(responseObj.correctSpelling);
+                resultOutput.fadeIn(200);
+                if (resultContainer.isHidden) {
+                    resultContainer.fadeIn(200);
+                    resultContainer.isHidden = false;
+                }
+
+                if (responseObj.explanation) {
+                    explanationOutput.html(responseObj.explanation);
+                    explanationContainer.fadeIn(200);
+                } else {
+                    explanationContainer.fadeOut(200);
+                    explanationOutput.html('');
+                }
+            });
+
+
+
         };
 
         var hideResultContainer = function() {
@@ -106,7 +117,7 @@ $(document).ready(function() {
         } else {
             resultModule.hideResultContainer();
         }
-        loadingSpinner.fadeOut(100);
+        loadingSpinner.fadeOut(200);
 
     });
 
