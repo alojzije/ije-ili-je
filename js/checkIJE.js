@@ -110,7 +110,7 @@ $(document).ready(function() {
         e.preventDefault();
         loadingSpinner.fadeIn(100);
 
-        var inputWord = inputField.val();
+        var inputWord = inputField.val().trim();
         if (inputWord) {
             window.history.pushState('', '', '?search=' + inputWord);
             resultModule.displayOutputForWord(inputWord);
