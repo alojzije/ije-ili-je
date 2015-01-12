@@ -4,7 +4,8 @@ body {
     font-size: 12px !important;
 }
 .title {
-    padding: 0 12%;
+    padding: 5% 0 0 0;
+    font-size: 2.2em;
 }
 .contentContainer {
     padding-top: 5%;
@@ -46,14 +47,28 @@ button {
     font-family: 'Ek Mukta', sans-serif !important;
     display: inline-block;
 }
+@media all and (min-width: 300px) {
+    .title {
+        padding: 5% 6% 0 6%;
+        font-size: 2em;
+    }
+}
 @media all and (min-width: 750px) {
+    body {
+        font-size: 13px !important;
+    }
     button {
         margin-top: -1px;
     }
+}
 @media all and (min-width: 1200px) {
+    body {
+        font-size: 16px !important;
+    }
     .contentContainer {
         width: 50%;
     }
     button {
         margin-top: 0px;
     }
+}
