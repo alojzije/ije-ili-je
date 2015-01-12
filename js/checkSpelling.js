@@ -126,7 +126,7 @@ $(document).ready(function() {
 
     });
 
-    $.getJSON('js/ijeChData.min.json', function(json) {
+    $.getJSON('js/ijeChDzData.min.json', function(json) {
         IJEchecker.setData(json);
         console.log('gotJson!');
         if (query) {
