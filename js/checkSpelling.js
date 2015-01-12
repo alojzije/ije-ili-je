@@ -3,18 +3,26 @@ $(document).ready(function() {
     var IJEchecker = (function() {
         // {'correct spelling of the word' :'optional HTML explanation'}
         var data = null;
+        var DONT_KNOW = 'Ne znam :(';
+        var NO_IJE_CH_DZ = 'Izgleda da u traženoj riječi ne postoji <b>{ije,je}, {c,č,ć}</b> niti <b>{d,dž,đ}</b>';
+        var response = {
+            'correctSpelling': DONT_KNOW,
+            'explanation': ''
+        };
 
         var setData = function(json) {
             data = json;
         };
 
-        var checkIJE = function(inputWord) {
-            var response = {
-                'correctSpelling': 'ne znam :(',
-                'explanation': false
-            };
+        var checkSpelling = function(inputWord) {
+            response.correctSpelling = DONT_KNOW;
+            response.explanation = '';
 
-            if (data[inputWord]) {
+
+            if (!(/ije|je|[cčćdđž]/).test(inputWord)) {
+                response.correctSpelling = NO_IJE_CH_DZ;
+
+            } else if (data[inputWord]) {
                 response.correctSpelling = inputWord;
                 response.explanation = data[inputWord];
             } else {
@@ -37,7 +45,7 @@ $(document).ready(function() {
         };
 
         return {
-            checkIJE: checkIJE,
+            checkSpelling: checkSpelling,
             setData: setData
         };
     })();
@@ -57,11 +65,11 @@ $(document).ready(function() {
         };
 
         var displayOutputForWord = function(word) {
-            var responseObj = IJEchecker.checkIJE(word.toLowerCase());
+            var responseObj = IJEchecker.checkSpelling(word.toLowerCase());
             //console.log(responseObj);
 
             resultOutput.fadeOut(200, function() {
-                resultOutput.text(responseObj.correctSpelling);
+                resultOutput.html(responseObj.correctSpelling);
                 resultOutput.fadeIn(200);
                 if (resultContainer.isHidden) {
                     resultContainer.fadeIn(200);
@@ -76,15 +84,12 @@ $(document).ready(function() {
                     explanationOutput.html('');
                 }
             });
-
-
-
         };
 
         var hideResultContainer = function() {
             resultContainer.fadeOut(200);
             explanationContainer.fadeOut(200);
-            resultOutput.text('');
+            resultOutput.html('');
             explanationOutput.html('');
         };
 
@@ -121,18 +126,13 @@ $(document).ready(function() {
 
     });
 
-    //$.getJSON('js/IJEdata.json', function(json) {
-    $.getJSON('js/IJE_CCH_data.json', function(json) {
+    $.getJSON('js/ijeChData.min.json', function(json) {
         IJEchecker.setData(json);
         console.log('gotJson!');
         if (query) {
             $('#ijeForm').submit();
         }
     });
-
-
-
-
 
 
 });
