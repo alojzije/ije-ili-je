@@ -27,6 +27,7 @@ $(document).ready(function() {
                     response.correctSpelling.push(inputWord);
                     response.explanation.push(data[inputWord]);
                 } 
+
                 var pattern = inputWord.replace(/ije|je/i, '[i]{0,1}[j]{0,1}e')
                     .replace(/c|ć|č/gi, '[cčć]{1}')
                     .replace(/s/gi, '[sš]{1}')
@@ -38,14 +39,13 @@ $(document).ready(function() {
                     if (word.match(regEx)) {
                         response.correctSpelling.push(word);
                         response.explanation.push(data[word]);
-                        break;
                     }
                 }
             }
-            if (response.correctSpelling.length === 0)
+            if (response.correctSpelling.length === 0){
                 response.correctSpelling.push(DONT_KNOW);
                 response.explanation.push('');
-
+            }
                 console.log(response);
             return response;
         };
