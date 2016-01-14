@@ -6,8 +6,8 @@ $(document).ready(function() {
         var DONT_KNOW = 'Ne znam :(';
         var NO_IJE_CH_DZ = 'Izgleda da u traženoj riječi ne postoji <b>{ije,je}, {c,č,ć}</b> niti <b>{d,dž,đ}</b>';
         var response = {
-            'correctSpelling': DONT_KNOW,
-            'explanation': ''
+            'correctSpelling': [],
+            'explanation': []
         };
 
         var setData = function(json) {
@@ -15,17 +15,15 @@ $(document).ready(function() {
         };
 
         var checkSpelling = function(inputWord) {
-            response.correctSpelling = DONT_KNOW;
-            response.explanation = '';
-
 
             if (!(/ije|je|[cčćdđž]/).test(inputWord)) {
-                response.correctSpelling = NO_IJE_CH_DZ;
-
-            } else if (data[inputWord]) {
-                response.correctSpelling = inputWord;
-                response.explanation = data[inputWord];
-            } else {
+                response.correctSpelling[0] = NO_IJE_CH_DZ;
+                response.explanation[0] = '';
+            }else {
+                if (data[inputWord]) {
+                    response.correctSpelling.push(inputWord);
+                    response.explanation.push(data[inputWord]);
+                } 
                 var pattern = inputWord.replace(/ije|je/i, '[i]{0,1}[j]{0,1}e')
                     .replace(/c|ć|č/gi, '[cčć]{1}')
                     .replace(/s/gi, '[sš]{1}')
@@ -35,12 +33,16 @@ $(document).ready(function() {
                 var regEx = new RegExp('^' + pattern + '$');
                 for (var word in data) {
                     if (word.match(regEx)) {
-                        response.correctSpelling = word;
-                        response.explanation = data[word];
+                        response.correctSpelling.push(word);
+                        response.explanation.push(data[word]);
                         break;
                     }
                 }
             }
+            if (response.correctSpelling.length == 0)
+                response.correctSpelling[0] = DONT_KNOW;
+                response.explanationπ[0] = '';
+
             return response;
         };
 
@@ -75,7 +77,6 @@ $(document).ready(function() {
                     resultContainer.fadeIn(200);
                     resultContainer.isHidden = false;
                 }
-
                 if (responseObj.explanation) {
                     explanationOutput.html(responseObj.explanation);
                     explanationContainer.fadeIn(200);
