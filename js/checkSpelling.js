@@ -39,9 +39,9 @@ $(document).ready(function() {
                     }
                 }
             }
-            if (response.correctSpelling.length == 0)
-                response.correctSpelling[0] = DONT_KNOW;
-                response.explanationπ[0] = '';
+            if (response.correctSpelling.length === 0)
+                response.correctSpelling.push(DONT_KNOW);
+                response.explanation.push('');
 
             return response;
         };
