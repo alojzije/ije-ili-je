@@ -15,7 +15,10 @@ $(document).ready(function() {
         };
 
         var checkSpelling = function(inputWord) {
-
+            var response = {
+                'correctSpelling': [],
+                'explanation': []
+            };
             if (!(/ije|je|[cčćdđž]/).test(inputWord)) {
                 response.correctSpelling[0] = NO_IJE_CH_DZ;
                 response.explanation[0] = '';
@@ -43,6 +46,7 @@ $(document).ready(function() {
                 response.correctSpelling.push(DONT_KNOW);
                 response.explanation.push('');
 
+                console.log(response);
             return response;
         };
 
