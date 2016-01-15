@@ -3,44 +3,47 @@ $(document).ready(function() {
     var IJEchecker = (function() {
         // {'correct spelling of the word' :'optional HTML explanation'}
         var data = null;
+        var dataPropertiesStringified = '';
         var DONT_KNOW = 'Ne znam :(';
         var NO_IJE_CH_DZ = 'Izgleda da u traženoj riječi ne postoji <b>{ije,je}, {c,č,ć}</b> niti <b>{d,dž,đ}</b>';
         var response = {
-            'correctSpelling': DONT_KNOW,
-            'explanation': ''
+            'correctSpelling': [],
+            'explanation': []
         };
 
         var setData = function(json) {
             data = json;
+            dataPropertiesStringified = String(Object.getOwnPropertyNames(data));
         };
 
         var checkSpelling = function(inputWord) {
-            response.correctSpelling = DONT_KNOW;
-            response.explanation = '';
-
-
+            var response = {
+                'correctSpelling': [],
+                'explanation': []
+            };
             if (!(/ije|je|[cčćdđž]/).test(inputWord)) {
-                response.correctSpelling = NO_IJE_CH_DZ;
-
-            } else if (data[inputWord]) {
-                response.correctSpelling = inputWord;
-                response.explanation = data[inputWord];
-            } else {
+                response.correctSpelling[0] = NO_IJE_CH_DZ;
+                response.explanation[0] = '';
+            }else {
                 var pattern = inputWord.replace(/ije|je/i, '[i]{0,1}[j]{0,1}e')
                     .replace(/c|ć|č/gi, '[cčć]{1}')
                     .replace(/s/gi, '[sš]{1}')
                     .replace(/z/gi, '[zž]{1}')
                     .replace(/d|đ|dž/gi, '[dđdž]{1,2}');
 
-                var regEx = new RegExp('^' + pattern + '$');
-                for (var word in data) {
-                    if (word.match(regEx)) {
-                        response.correctSpelling = word;
-                        response.explanation = data[word];
-                        break;
-                    }
+                var regEx = new RegExp('\\b' + pattern + '\\b', 'g');
+                var matchedWords = dataPropertiesStringified.match(regEx);
+                for (var i in matchedWords) {
+                    var word = matchedWords[i];
+                    response.correctSpelling.push(word);
+                    response.explanation.push(data[word]);
                 }
             }
+            if (response.correctSpelling.length === 0 && response.correctSpelling[0] !== ''){
+                response.correctSpelling.push(DONT_KNOW);
+                response.explanation.push('');
+            }
+
             return response;
         };
 
@@ -66,18 +69,16 @@ $(document).ready(function() {
 
         var displayOutputForWord = function(word) {
             var responseObj = IJEchecker.checkSpelling(word.toLowerCase());
-            //console.log(responseObj);
 
             resultOutput.fadeOut(200, function() {
-                resultOutput.html(responseObj.correctSpelling);
+                resultOutput.html(responseObj.correctSpelling.join(' ili '));
                 resultOutput.fadeIn(200);
                 if (resultContainer.isHidden) {
                     resultContainer.fadeIn(200);
                     resultContainer.isHidden = false;
                 }
-
-                if (responseObj.explanation) {
-                    explanationOutput.html(responseObj.explanation);
+                if (responseObj.explanation.length ) {
+                    explanationOutput.html(responseObj.explanation[0]);
                     explanationContainer.fadeIn(200);
                 } else {
                     explanationContainer.fadeOut(200);
@@ -100,7 +101,6 @@ $(document).ready(function() {
         };
 
     })();
-
 
 
     var inputField = $('#inputWord');
