@@ -3,6 +3,7 @@ $(document).ready(function() {
     var IJEchecker = (function() {
         // {'correct spelling of the word' :'optional HTML explanation'}
         var data = null;
+        var dataPropertiesStringified = '';
         var DONT_KNOW = 'Ne znam :(';
         var NO_IJE_CH_DZ = 'Izgleda da u traženoj riječi ne postoji <b>{ije,je}, {c,č,ć}</b> niti <b>{d,dž,đ}</b>';
         var response = {
@@ -12,6 +13,7 @@ $(document).ready(function() {
 
         var setData = function(json) {
             data = json;
+            dataPropertiesStringified = String(Object.getOwnPropertyNames(data));
         };
 
         var checkSpelling = function(inputWord) {
@@ -29,21 +31,22 @@ $(document).ready(function() {
                     .replace(/z/gi, '[zž]{1}')
                     .replace(/d|đ|dž/gi, '[dđdž]{1,2}');
 
-                var regEx = new RegExp('^' + pattern + '$');
-                for (var word in data) {
-                    if (word.match(regEx)) {
-                        response.correctSpelling.push(word);
-                        response.explanation.push(data[word]);
-                    }
+                var regEx = new RegExp('\\b' + pattern + '\\b', 'g');
+                var matchedWords = dataPropertiesStringified.match(regEx);
+                for (var i in matchedWords) {
+                    var word = matchedWords[i];
+                    response.correctSpelling.push(word);
+                    response.explanation.push(data[word]);
                 }
             }
             if (response.correctSpelling.length === 0){
                 response.correctSpelling.push(DONT_KNOW);
                 response.explanation.push('');
             }
-            console.log(response);
+
             return response;
         };
+
         return {
             checkSpelling: checkSpelling,
             setData: setData
@@ -66,17 +69,16 @@ $(document).ready(function() {
 
         var displayOutputForWord = function(word) {
             var responseObj = IJEchecker.checkSpelling(word.toLowerCase());
-            //console.log(responseObj);
 
             resultOutput.fadeOut(200, function() {
-                resultOutput.html(responseObj.correctSpelling);
+                resultOutput.html(responseObj.correctSpelling.join(' ili '));
                 resultOutput.fadeIn(200);
                 if (resultContainer.isHidden) {
                     resultContainer.fadeIn(200);
                     resultContainer.isHidden = false;
                 }
-                if (responseObj.explanation) {
-                    explanationOutput.html(responseObj.explanation);
+                if (responseObj.explanation.length ) {
+                    explanationOutput.html(responseObj.explanation[0]);
                     explanationContainer.fadeIn(200);
                 } else {
                     explanationContainer.fadeOut(200);
