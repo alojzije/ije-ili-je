@@ -23,11 +23,6 @@ $(document).ready(function() {
                 response.correctSpelling[0] = NO_IJE_CH_DZ;
                 response.explanation[0] = '';
             }else {
-                if (data[inputWord]) {
-                    response.correctSpelling.push(inputWord);
-                    response.explanation.push(data[inputWord]);
-                } 
-
                 var pattern = inputWord.replace(/ije|je/i, '[i]{0,1}[j]{0,1}e')
                     .replace(/c|ć|č/gi, '[cčć]{1}')
                     .replace(/s/gi, '[sš]{1}')
@@ -46,10 +41,9 @@ $(document).ready(function() {
                 response.correctSpelling.push(DONT_KNOW);
                 response.explanation.push('');
             }
-                console.log(response);
+            console.log(response);
             return response;
         };
-
         return {
             checkSpelling: checkSpelling,
             setData: setData
@@ -105,7 +99,6 @@ $(document).ready(function() {
         };
 
     })();
-
 
 
     var inputField = $('#inputWord');
